@@ -1,0 +1,80 @@
+Welcome to Contribute to the BTFCoin
+
+We are extremely delighted that you've shown interest in the BTFCoin project and are willing to contribute to its growth. Whether you're an experienced blockchain developer, a cryptography expert, or a budding programmer full of enthusiasm, there are ample opportunities for you to shine in this project. To ensure a smooth and efficient contribution process, let's familiarize ourselves with the project's collaboration norms and procedures.
+
+Code Style Guidelines
+
+Python Code Style
+This project is mainly developed in Python and adheres to the PEP8 style guide:
+
+Indentation: Use 4 spaces uniformly for indentation and avoid using tabs. This ensures that the code appears consistent across different editors and environments, preventing syntax errors or logical confusion caused by inconsistent indentation.
+
+Naming Conventions:
+Variable names should be in lowercase with underscores, e.g., transaction_data, to clearly convey the variable's meaning.
+Function names also follow the lowercase with underscores format, highlighting their functionality, like calculate_hash.
+Class names use the PascalCase convention, with the first letter of each word capitalized, such as BlockchainNode, making them stand out clearly in the code structure.
+
+Line Length: Try to keep each line of code within 79 characters. For long expressions, continue on the next line using a backslash \ for connection, or use parentheses to wrap the expression appropriately to enhance code readability.
+
+JavaScript Code Style (if there's front-end or related JS code)
+Variable and Function Declarations: Use const and let to declare variables uniformly and avoid using var to minimize potential issues caused by variable hoisting. Use the regular function keyword for function declarations and arrow functions where appropriate to enhance code conciseness.
+
+Semicolon Usage: Follow the best practices of the JavaScript community and always add a semicolon at the end of a statement to prevent hard-to-debug errors caused by automatic semicolon insertion mechanisms.
+
+Code Formatting: It is recommended to use ESLint with popular code style rule sets (such as the Airbnb style) to format the code regularly, ensuring a unified code style across the team and a clear and tidy code structure.
+
+Branch Management Strategy
+
+Protecting the Master Branch
+The master branch is the core repository of the project's stable code and is strictly protected. Direct code pushes to this branch are prohibited. It only accepts Pull Requests that have passed review, ensuring that the online version is stable and reliable, ready for users to download, deploy, and use at any time.
+
+Creating Feature Branches
+When you start developing a new feature, fixing a bug, or optimizing performance, please create an independent feature branch based on the master branch. The branch name should follow a clear and understandable principle. For example, feature/add-quantum-encryption-optimization is used for the development related to optimizing quantum encryption; bugfix/transaction-hash-validation clearly indicates that it's a branch for fixing issues with transaction Hash validation.
+
+The Code Merging Process
+After development and self-testing are completed, initiate a Pull Request (PR) to the master branch:
+The title of the PR should concisely describe the core content of the changes, e.g., "Optimize the performance of the quantum encryption algorithm to enhance transaction processing speed".
+The description should detail the motivation for the changes, implementation details, test methods and results for the new features, enabling reviewers to quickly grasp the situation.
+Link relevant issues (if any) to ensure that issue tracking and code fixes are closely integrated, improving project management efficiency.
+Team members will review the PR promptly and provide feedback, which may involve code style adjustments, suggestions for feature improvements, etc. You need to respond actively and make modifications as required until the code meets the project's requirements and is successfully merged into the master branch.
+
+Steps to Submit a Pull Request
+Fork the Repository: Go to the BTFCoin's GitHub page and click the "Fork" button in the upper right corner to clone a copy of the project to your personal GitHub account. This will be your exclusive development space.
+
+Clone Locally: Use git clone [the address of your forked repository] to create a local copy of the project on your computer. Then, enter the project directory and start your development journey.
+
+Create and Switch Branches: Based on the above branch creation rules, create a new branch using git checkout -b [branch name] and start coding in this branch.
+
+Code Development and Commit: Code freely. After achieving phased results or key changes, use git add [file paths of the changes] to add the files to the staging area, and then git commit -m "clear commit message" to commit the local changes. The commit message should accurately summarize the core content of this commit.
+
+Keep the Code Synchronized: If the development cycle is long, regularly execute git pull origin master to pull the latest code from the master branch to your local repository, promptly resolve code conflicts, and ensure branch compatibility.
+
+Push the Branch and Initiate a PR: Once development is complete, use git push origin [branch name] to push the local branch to your forked repository on GitHub. Then, go to the GitHub page and click "New Pull Request". Follow the prompts to select the source branch (the branch you developed) and the target branch (master), complete the title and description information, and submit the PR. Wait for review and feedback.
+
+Testing Requirements
+Any code changes should be accompanied by corresponding tests to ensure the correctness and stability of the features:
+
+Unit Testing: Write unit tests for independent functions and class methods, using the project's built-in test framework (such as unittest or pytest in Python). Simulate inputs and outputs to verify the functional logic. The unit test coverage should strive to reach over 80%, with key modules aiming for full coverage.
+
+Integration Testing: Simulate scenarios of multi-module collaboration, node-to-node communication, and transaction flow, and write integration test cases to examine the overall performance of the system. Regularly execute integration tests, especially before major features go live and after code refactoring, to promptly identify potential compatibility issues.
+
+Document Updates
+
+If code changes involve functional adjustments, interface changes, or new module additions, relevant documents need to be updated synchronously:
+
+If there are changes in the project overview, feature highlights, or usage methods in the README file, update it immediately.
+
+Update the API documentation corresponding to interface descriptions, parameter requirements, and return value specifications as the code changes.
+
+Add detailed comments to the code to explain complex logic and core steps of algorithms, facilitating subsequent developers to understand and maintain the code, making the code serve as documentation and reducing the cost of knowledge transfer.
+
+Community Communication
+Join BTFCoin's [Discord group](link to the community, if available), [GitHub discussion section](link to the project discussion page), and actively participate in the exchanges:
+
+Share your ideas about feature design in the discussion section before development to gather community opinions and optimize the plan.
+
+When encountering technical difficulties during development, post your questions and work with community members to overcome them.
+
+After the code is merged, listen to community feedback and continue iterating and optimizing to jointly build a high-quality project.
+
+Thank you once again for contributing to the BTFCoin project. Let's work together to create a revolutionary future for blockchain!
