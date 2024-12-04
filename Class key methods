@@ -1,0 +1,84 @@
+import socket
+import threading
+from blockchain.transaction import Transaction
+
+class Node:
+    def __init__(self):
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.host = '0.0.0.0'  # Listen on all available network interfaces
+        self.port = 5000  # Custom port number, configurable
+        self.transaction_pool = []
+        self.connected_nodes = []
+        self.blockchain = []  # Locally store a copy of the blockchain
+
+    def start(self):
+        try:
+            self.socket.bind((self.host, self.port))
+            self.socket.listen(5)  # Allow a maximum of 5 connections to queue
+            print(f"The node has been started and is listening{self.host}:{self.port}")
+            # Start the listening thread
+            listener_thread = threading.Thread(target=self.listen_for_connections)
+            listener_thread.start()
+            # Start transaction processing thread
+            transaction_thread = threading.Thread(target=self.process_transactions)
+            transaction_thread.start()
+        except Exception as e:
+            print(f"Node startup failed: {e}")
+
+    def listen_for_connections(self):
+        while True:
+            client_socket, client_address = self.socket.accept()
+            # Receive node connections, process handshakes and other logic
+            self.connected_nodes.append(client_socket)
+            print(f"New Node Connection: {client_address}")
+
+    def process_transactions(self):
+        while True:
+            if len(self.transaction_pool) > 0:
+                # Take out the transaction for processing
+                transaction = self.transaction_pool.pop(0)
+                # Call the function in the previous quantum_encrypt.py
+                try:
+                    encrypted_hash = request_quantum_encrypt(json.dumps(transaction.__dict__))
+                    transaction.hash = encrypted_hash
+                    # After the transaction is encrypted successfully, it is added to the block
+                    if len(self.blockchain) == 0:
+                        # Genesis Block Processing
+                        genesis_block = self.create_genesis_block([transaction])
+                        self.blockchain.append(genesis_block)
+                    else:
+                        last_block = self.blockchain[-1]
+                        new_block = self.create_block([transaction], last_block)
+                        self.blockchain.append(new_block)
+                    # Broadcast blocks to other nodes
+                    self.broadcast_block(new_block)
+                except Exception as e:
+                    print(f"Transaction processing failed: {e}")
+
+    def create_genesis_block(self, transactions):
+        # Creating the Genesis Block
+        return Block(
+            index=0,
+            previous_hash='0' * 64,  # The Hash before the genesis block is all 0
+            transactions=transactions,
+            timestamp=1630000040,
+            difficulty=4
+        )
+
+    def create_block(self, transactions, previous_block):
+        # Create a normal block
+        new_index = previous_block.index + 1
+        new_timestamp = 1630000050  # Timestamp
+        new_difficulty = previous_block.difficulty  # Difficulty Adjustment Logic
+        return Block(
+            index=new_index,
+            previous_hash=previous_block.hash_block(),
+            transactions=transactions,
+            timestamp=new_timestamp,
+            difficulty=new_difficulty
+        )
+
+    def broadcast_block(self, block):
+        # The logic of broadcasting blocks to connected nodes. The specific network sending code is not disclosed.
+        for node in self.connected_nodes:
+            print(f"To Node {node.getpeername()} Broadcast Block")
