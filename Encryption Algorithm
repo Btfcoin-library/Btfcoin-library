@@ -1,0 +1,32 @@
+import requests
+import json
+
+# Encryption service interface address
+SERVER_ENCRYPT_URL = "https://rpc.btfcoin.com/encrypt"
+
+def request_quantum_encrypt(transaction_data):
+    payload = {
+        'data': transaction_data
+    }
+    response = requests.post(SERVER_ENCRYPT_URL, json=payload)
+    if response.status_code == 200:
+        result = response.json()
+        return result['hash']
+    else:
+        raise Exception("Request failed")
+
+# Transaction data
+example_transaction_data = {
+    'sender': 'Eve',
+    'receiver': 'Frank',
+    'amount': 8,
+    'timestamp': 1630000030
+}
+example_transaction_json = json.dumps(example_transaction_data, sort_keys=True)
+
+# Call quantum encryption service to generate transactions Hash
+try:
+    encrypted_hash = request_quantum_encrypt(example_transaction_json)
+    print("Encrypted transactions Hash:", encrypted_hash)
+except Exception as e:
+    print(f"Encryption failed: {e}")
