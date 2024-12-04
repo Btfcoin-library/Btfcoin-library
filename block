@@ -1,0 +1,86 @@
+import hashlib
+import json
+from typing import List
+
+class Block:
+    def __init__(self, index, previous_hash, transactions: List[dict], timestamp, difficulty):
+        self.index = index
+        self.previous_hash = previous_hash
+        self.transactions = transactions
+        self.timestamp = timestamp
+        self.difficulty = difficulty
+        self.nonce = 0  # Block Generation）
+
+    def calculate_merkle_root(self):
+        # Constructing the Merkle tree to generate roots Hash
+        hashes = [tx['hash'] for tx in self.transactions]
+        while len(hashes) > 1:
+            new_hashes = []
+            for i in range(0, len(hashes), 2):
+                combined = hashes[i] + hashes[i + 1] if i + 1 < len(hashes) else hashes[i]
+                hash_object = hashlib.sha256(combined.encode())
+                new_hashes.append(hash_object.hexdigest())
+            hashes = new_hashes
+        return hashes[0] if hashes else None
+
+    def hash_block(self):
+        block_header = {
+            'index': self.index,
+            'previous_hash': self.previous_hash,
+            'merkle_root': self.calculate_merkle_root(),
+            'timestamp': self.timestamp,
+            'difficulty': self.difficulty,
+            'nonce': self.nonce
+        }
+        block_header_json = json.dumps(block_header, sort_keys=True).encode()
+        return hashlib.sha256(block_header_json).hexdigest()
+
+    def mine_block(self):
+        # Simple calculation optimization
+        target = '0' * self.difficulty
+        while True:
+            hash_value = self.hash_block()
+            if hash_value.startswith(target):
+                return hash_value
+            self.nonce += 1
+
+
+# Transaction data structure
+transaction_1 = {
+    'sender': 'Alice',
+    'receiver': 'Bob',
+    'amount': 10,
+    'timestamp': 1630000000,
+    'hash': None  # Initial Hash
+}
+transaction_2 = {
+    'sender': 'Charlie',
+    'receiver': 'David',
+    'amount': 5,
+    'timestamp': 1630000010,
+    'hash': None
+}
+
+# Function to generate transaction Hash
+def generate_transaction_hash(transaction):
+    transaction_json = json.dumps(transaction, sort_keys=True).encode()
+    hash_object = hashlib.sha256(transaction_json)
+    transaction['hash'] = hash_object.hexdigest()
+    return transaction['hash']
+
+# Transaction generation Hash
+generate_transaction_hash(transaction_1)
+generate_transaction_hash(transaction_2)
+
+# Create a block containing transactions
+new_block = Block(
+    index=1,
+    previous_hash='00000000000000000000000000000000',  # The previous block of the genesis block Hash 0
+    transactions=[transaction_1, transaction_2],
+    timestamp=1630000020,
+    difficulty=4
+)
+
+# Calculate and print block Hash
+block_hash = new_block.hash_block()
+print(Block Hash:", block_hash)
